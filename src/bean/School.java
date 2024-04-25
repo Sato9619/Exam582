@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class School implements Serializable {
 
+
+	//aaaaaa
 	/**
 	 * 学校コード:String
 	 */
