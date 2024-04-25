@@ -9,84 +9,9 @@ import java.util.List;
 
 import bean.School;
 import bean.Student;
+import bean.TestListStudent;
 
 public class TestListStudentDao  extends Dao{
-
-	/**
-	 * getメソッド 学生番号を指定して学生インスタンスを1件取得する
-	 *
-	 * @param no:String
-	 *            学生番号
-	 * @return 学生クラスのインスタンス 存在しない場合はnull
-	 * @throws Exception
-	 */
-	public Student get(String no) throws Exception {
-
-		//学生インスタンスを初期化
-		Student student =new Student();
-
-		//データベースへのコネクションを確立
-		Connection connection = getConnection();
-
-		//プリペアードステートメント
-		PreparedStatement statement = null;
-
-
-		try{
-
-
-			//プリペアードステートメントにSQL文をセット
-			statement = connection.prepareStatement("SELECT * FROM STUDENT WHERE STUDENT_NO = ?");
-			//各部分に値を設定
-			statement.setString(1, no);
-
-			//上記のSQL文を実行し結果を取得する
-			ResultSet rSet = statement.executeQuery();
-
-			//学校Daoを初期化
-			SchoolDao schoolDao =new SchoolDao();
-
-			if (rSet.next()){
-				student.setNo(rSet.getString("student_no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				//学校フィールドには学校コードで検索した学校インスタンスをセット
-				student.setSchool(schoolDao.get(rSet.getString("school_cd")));
-
-			}else {
-				//リザルトセットが存在しない場合
-				//学生インスタンスにnullをセット
-				student = null;
-			}
-
-		}catch (Exception e){
-			throw e;
-		}finally {
-			//プリペアステートメントを閉じる
-			if (statement != null){
-				try {
-					statement.close();
-				} catch (SQLException sqle){
-					throw sqle;
-				}
-			}
-			//コネクションを閉じる
-			if (connection != null){
-				try {
-					connection.close();
-				} catch (SQLException sqle){
-					throw sqle;
-				}
-			}
-		}
-		return student;
-
-
-
-	}
-
 
 	/**
 	 * baseSql:String 共通SQL文 プライベート
@@ -97,12 +22,11 @@ public class TestListStudentDao  extends Dao{
 	 * postFilterメソッド フィルター後のリストへの格納処理 プライベート
 	 *
 	 * @param rSet:リザルトセット
-	 * @param school:School
 	 *            学校
 	 * @return 学生のリスト:List<Student> 存在しない場合は0件のリスト
 	 * @throws Exception
 	 */
-	private List<Student> postFilter(ResultSet rSet, School school) throws Exception {
+	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
 		//リストを初期化
 		List<Student> list = new ArrayList<>();
 
@@ -116,7 +40,6 @@ public class TestListStudentDao  extends Dao{
 				student.setEntYear(rSet.getInt("ent_year"));
 				student.setClassNum(rSet.getString("class_num"));
 				student.setAttend(rSet.getBoolean("is_attend"));
-				student.setSchool(school);
 				//リストに追加
 				list.add(student);
 

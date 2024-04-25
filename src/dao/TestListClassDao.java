@@ -10,7 +10,7 @@ import java.util.List;
 import bean.School;
 import bean.Student;
 
-public class TestListSubjectDao  extends Dao{
+public class TestListClassDao  extends Dao{
 
 	/**
 	 * getメソッド 学生番号を指定して学生インスタンスを1件取得する
