@@ -5,12 +5,12 @@ public class TestListStudent {
 	/**
 	 *  科目名：String
 	 */
-	private String subject_Name;
+	private String subject_name;
 
 	/**
 	 *  科目コード：String
 	 */
-	private String subject_Cd;
+	private String subject_cd;
 
 	/**
 	 *  回数：int
@@ -26,19 +26,19 @@ public class TestListStudent {
 	//せったげった
 
 	public String getSubjectName() {
-		return subject_Name;
+		return subject_name;
 	}
 
 	public void setSubjectName(String subjectName) {
-		this.subject_Name = subjectName;
+		this.subject_name = subjectName;
 	}
 
 	public String getSubjectCd() {
-		return subject_Cd;
+		return subject_cd;
 	}
 
 	public void setSubjectCd(String subjectCd) {
-		this.subject_Cd = subjectCd;
+		this.subject_cd = subjectCd;
 	}
 
 	public int getTime() {
