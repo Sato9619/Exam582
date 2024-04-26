@@ -9,7 +9,7 @@ public class Test implements Serializable{
 	 * 生徒の箱：Student
 	 */
 
-	private String student;
+	private Student student;
 
 
 	/**
@@ -43,11 +43,11 @@ public class Test implements Serializable{
 
 	private int point;
 
-	public String getStudent() {
+	public Student getStudent() {
 		return student;
 	}
 
-	public void setStudent(String student) {
+	public void setStudent(Student student) {
 		this.student = student;
 	}
 
