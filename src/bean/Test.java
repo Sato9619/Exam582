@@ -29,6 +29,12 @@ public class Test implements Serializable{
 	 * 学校の箱:School
 	 */
 
+	private School school;
+
+	/**
+	 * テスト回数:time
+	 */
+
 	private int time;
 
 	/**
@@ -59,6 +65,15 @@ public class Test implements Serializable{
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+
+
+	public School getSchool() {
+		return school;
+	}
+
+	public void setSchool(School school) {
+		this.school = school;
 	}
 
 	public int getTime() {
