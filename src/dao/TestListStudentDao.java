@@ -9,10 +9,10 @@ import java.util.List;
 
 import bean.School;
 import bean.Student;
-import bean.TestListStudent;
 
 public class TestListStudentDao  extends Dao{
 
+	//31から58,108,187,259,309から339,コメントアウト
 	/**
 	 * baseSql:String 共通SQL文 プライベート
 	 */
@@ -26,6 +26,8 @@ public class TestListStudentDao  extends Dao{
 	 * @return 学生のリスト:List<Student> 存在しない場合は0件のリスト
 	 * @throws Exception
 	 */
+
+	/**
 	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
 		//リストを初期化
 		List<Student> list = new ArrayList<>();
@@ -50,7 +52,9 @@ public class TestListStudentDao  extends Dao{
 		return list;
 
 
+
 	}
+*/
 
 	/**
 	 * filterメソッド 学校、入学年度、クラス番号、在学フラグを指定して学生の一覧を取得する
@@ -104,7 +108,7 @@ public class TestListStudentDao  extends Dao{
 			//上記のSQL文を実行し結果を取得する
 			ResultSet rSet = statement.executeQuery();
 
-			list = postFilter(rSet, school);
+			//list = postFilter(rSet, school);
 
 		}catch (Exception e){
 			throw e;
@@ -183,7 +187,7 @@ public class TestListStudentDao  extends Dao{
 			//上記のSQL文を実行し結果を取得する
 			rSet = statement.executeQuery();
 
-			list = postFilter(rSet, school);
+			//list = postFilter(rSet, school);
 
 		}catch (Exception e){
 			throw e;
@@ -256,7 +260,7 @@ public class TestListStudentDao  extends Dao{
 			//上記のSQL文を実行し結果を取得する
 			rSet = statement.executeQuery();
 
-			list = postFilter(rSet, school);
+			//list = postFilter(rSet, school);
 
 		}catch (Exception e){
 			throw e;
@@ -304,6 +308,8 @@ public class TestListStudentDao  extends Dao{
 
 		try{
 			//データベースから学生を取得
+
+			/**
 			Student old = get(student.getNo());
 
 			if (old == null) {
@@ -332,6 +338,8 @@ public class TestListStudentDao  extends Dao{
 				statement.setBoolean(4, student.isAttend());
 				statement.setString(5, student.getNo());
 			}
+
+			*/
 
 			//プリペアードステートメントを実行
 			count = statement.executeUpdate();

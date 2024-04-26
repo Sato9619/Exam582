@@ -1,7 +1,5 @@
 package bean;
 
-import java.util.Map;
-
 public class TestListClass {
 
 	/**
@@ -27,7 +25,7 @@ public class TestListClass {
 	/**
 	 * 得点りすと:Map<integer,integer>
 	 */
-	private Map<integer,integer> points;
+	//private Map<integer,integer> points;
 
 
 
