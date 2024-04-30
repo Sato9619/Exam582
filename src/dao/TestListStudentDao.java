@@ -11,12 +11,11 @@ import bean.Student;
 import bean.TestListStudent;
 
 public class TestListStudentDao  extends Dao{
-	//あげる♡select distinct subject.name,subject.subject_cd,test.no,test.point from test inner join subject on subject.subject_cd=test.subject_cd where student_no = ?
 
 	/**
 	 * baseSql:String 共通SQL文 プライベート
 	 */
-	private String baseSql = "select * from test where student_no=? ";
+	private String baseSql = "select distinct subject.subject_name,subject.subject_cd,test.student_no,test.point from test inner join subject on subject.subject_cd=test.subject_cd where student_no = ?;";
 
 	/**
 	 * postFilterメソッド フィルター後のリストへの格納処理 プライベート

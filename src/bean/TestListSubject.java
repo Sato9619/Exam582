@@ -3,7 +3,7 @@ package bean;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestListClass {
+public class TestListSubject {
 
 	/**
 	 * 入学年度:int
