@@ -75,27 +75,63 @@ public class SubjectDao  extends Dao{
 		return subject;
 	}
 
+	private List<Subject> postFilter(ResultSet rSet, School school) throws Exception {
+		//リストを初期化
+		List<Subject> list = new ArrayList<>();
+
+		try{
+			//リザルトセットを全件走査
+			while (rSet.next()){
+				Subject subject = new Subject();
+				//学生インスタンスに検索結果をセット
+				subject.setSubject_cd(rSet.getString("SUBJECT_CD"));
+				subject.setSubject_name(rSet.getString("NAME"));
+				subject.setSchool(school);;
+				//リストに追加
+				list.add(subject);
+
+			}
+		} catch (SQLException | NullPointerException e){
+			e.printStackTrace();
+		}
+		return list;
+
+
+	}
+
+
 
 
 		private String baseSql = "select * from subject where school_cd=?";
 
-		private List<Subject> filter(School school) throws Exception {
+		public List<Subject> filter(School school) throws Exception {
 
 			//リストを初期化
-			List<Subject>list = new ArrayList<>();
+			List<Subject> list = new ArrayList<>();
 			//コネクションを確立
 			Connection connection = getConnection();
 			//プリペアードステートメント
 			PreparedStatement statement = null;
 			//リザルトセット
 			ResultSet rSet = null;
-			//SQL文の条件
-			String condition = "and subject_cd=? and name=?";
-			//SQL文のソート
-			String order = "order by no asc";
+
+//			//SQL文の条件
+//			String condition = "and subject_cd=? and name=?";
+//			//SQL文のソート
+//			String order = "order by no asc";
 
 			try{
-				statement = connection.prepareStatement(baseSql + condition + order);
+//				statement = connection.prepareStatement(baseSql + condition + order);
+				statement = connection.prepareStatement(baseSql);
+
+				//各部分に値を設定
+				statement.setString(1, school.getCd());
+
+				//上記のSQL文を実行し結果を取得する
+				rSet = statement.executeQuery();
+
+				list = postFilter(rSet, school);
+
 			}catch(Exception e){
 				throw e;
 			}finally{
