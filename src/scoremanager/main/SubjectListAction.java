@@ -1,10 +1,15 @@
 package scoremanager.main;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Subject;
 import bean.Teacher;
+import dao.ClassNumDao;
+import dao.SubjectDao;
 import tool.Action;
 
 public class SubjectListAction extends Action{
@@ -18,6 +23,12 @@ public class SubjectListAction extends Action{
 
 				String STBJECT_CD="";// 科目コード
 				String SUBJECT_NAME = "";//科目名
+				List<Subject> subjects = null;// 科目リスト
+
+
+				ClassNumDao cNumDao = new ClassNumDao();//科目Dao
+
+				SubjectDao sDao = new SubjectDao();//科目Dao
 
 
 				//リクエストパラメータ―の取得 2
@@ -30,8 +41,16 @@ public class SubjectListAction extends Action{
 				//ClassNumDaoの中で学校コードからクラスを抽出してる
 
 
-				/**
 				List<String> list = cNumDao.filter(teacher.getSchool());
+				subjects = sDao.filter(teacher.getSchool());
+
+				// リクエストに学生リストをセット
+				req.setAttribute("subjects", subjects);				//入学年度等の絞り込み結果がstudentsの箱に入ってる
+				// リクエストにデータをセット
+				req.setAttribute("class_num_set", list);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+
+
+				/**
 
 				if (entYearStr != null) {
 					// 数値に変換
