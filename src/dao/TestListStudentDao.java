@@ -33,7 +33,7 @@ public class TestListStudentDao  extends Dao{
 			//リザルトセットを全件走査
 			while (rSet.next()){
 				TestListStudent testliststudent = new TestListStudent();
-				//学生インスタンスに検索結果をセット
+				//学生別成績インスタンスに検索結果をセット
 				testliststudent.setPoint(rSet.getInt("point"));
 				testliststudent.setSubjectCd(rSet.getString("subject_cd"));
 				testliststudent.setSubjectName(rSet.getString("subject_name"));
