@@ -13,7 +13,7 @@
 	<h2><b>成績参照</b></h2>
 
 	<form action = "TestListSubjectExecute.action" method="get">
-<div>科目情報
+	<div>科目情報
 		<th>入学年度
 			<select name="f1">
 				<option value="0">--------</option>
@@ -48,16 +48,17 @@
 	<form action = "TestListStudentExecute.action" method="get">
 		<label>学生情報</label>
 		<div>学生番号
-			<input type="text" name="f4" maxlength="10" placeholder="学生番号を入力してください"
+		<input type="text" name="f4" maxlength="10" placeholder="学生番号を入力してください"
 			autocomplete="off" required="True">
-			<button>検索</button>
+
+		<button>検索</button>
 		</div>
 
 	</form>
 
 	<c:choose>
-		<c:when test="${testliststudent.size()>0}">
-			<div>検索結果：${testliststudent.student_no}</div>
+		<c:when test="${testliststudent.size() > 0}">
+			<div>検索結果：${student}</div>
 
 			<table class="table table-hover">
 				<tr>
@@ -66,12 +67,13 @@
 					<th>回数</th>
 					<th>点数</th>
 				</tr>
-				<c:forEach var="testliststudent" items="${testliststudent}">
+
+			 	<c:forEach var="tliststudent" items="${testliststudent}">
 					<tr>
-						<td>${testliststudent.subject_name}</td>
-						<td>${testliststudent.subject_cd}</td>
-						<td>${testliststudent.time}</td>
-						<td>${testliststudent.point}</td>
+						<td>${tliststudent.subject_name}</td>
+						<td>${tliststudent.subject_cd}</td>
+						<td>${tliststudent.time}</td>
+						<td>${tliststudent.point}</td>
 					</tr>
 				</c:forEach>
 			</table>

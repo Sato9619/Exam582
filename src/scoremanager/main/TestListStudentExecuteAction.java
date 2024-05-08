@@ -29,12 +29,15 @@ public class TestListStudentExecuteAction extends Action {
 		Map<String, String> errors = new HashMap<>();// エラーメッセージ
 
 		//リクエストパラメータ―の取得 2
+		student_no = req.getParameter("f4");//学生番号
 
+		System.out.println(student_no);
 
 		//DBからデータ取得 3
 		student = sDao.get(student_no);// 学生番号から学生インスタンスを取得
 		List<TestListStudent> list = tlsDao.filter(student);// studentコードをもとにテストの一覧を取得
 
+		System.out.println(list);
 
 		//ビジネスロジック 4
 
@@ -48,9 +51,10 @@ public class TestListStudentExecuteAction extends Action {
 		//エラーがあったかどうかで手順6~7の内容が分岐
 		//レスポンス値をセット 6
 		//JSPへフォワード 7
-		System.out.println("★A★★★★★★★★★★★★★★★★");
-		req.setAttribute("testliststudent", list);//学生別成績のlistをセット
 
+		req.setAttribute("testliststudent", list);//学生別成績のlistをセット
+		req.setAttribute("student", student);//学生別成績のlistをセット
+		System.out.println("★A★★★★★★★★★★★★★★★★");
 		req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
 	}
 }

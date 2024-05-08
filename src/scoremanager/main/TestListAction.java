@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Subject;
 import bean.Teacher;
 import bean.TestListStudent;
 import dao.ClassNumDao;
+import dao.SubjectDao;
 import dao.TestListStudentDao;
 import dao.TestListSubjectDao;
 import tool.Action;
@@ -37,6 +39,7 @@ public class TestListAction extends Action {
 		List<TestListSubject> testlistsubject = null;// 科目別成績リスト
 
 		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
+		SubjectDao sDao = new SubjectDao();// クラス番号Daoを初期化
 		TestListStudentDao tlsDao = new TestListStudentDao();// クラス番号Daoを初期化
 		TestListSubjectDao tlsbDao = new TestListSubjectDao();// クラス番号Daoを初期化
 
@@ -44,10 +47,6 @@ public class TestListAction extends Action {
 		Map<String, String> errors = new HashMap<>();// エラーメッセージ
 
 		//リクエストパラメータ―の取得 2
-		entYearStr = req.getParameter("f1");
-		classNum = req.getParameter("f2");
-		subject = req.getParameter("f3");
-		student_no = req.getParameter("f4");//学生番号
 
 
 		//DBからデータ取得 3
@@ -56,7 +55,7 @@ public class TestListAction extends Action {
 		List<String> listclassNum = cNumDao.filter(teacher.getSchool());
 
 		//SubjectDaoの中で学校コードから科目を抽出してる
-		//List<String> listsubject = SubjectDao.filter(teacher.getSchool());
+		List<Subject> listsubject = sDao.filter(teacher.getSchool());
 
 //		if (entYearStr != null) {
 //			// 数値に変換
@@ -102,9 +101,10 @@ public class TestListAction extends Action {
 //		req.setAttribute("student_no", student_no);				//入学年度等の絞り込み結果がstudentsの箱に入ってる
 		// リクエストにデータをセット
 		req.setAttribute("class_num_set", listclassNum);			//学校コードで絞り込んだ所属している学校のクラスのリスト
-		//req.setAttribute("listsubject", listsubject);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("listsubject", listsubject);			//学校コードで絞り込んだ所属している学校のクラスのリスト
 //		req.setAttribute("ent_year_set", entYearSet);		//入学年度の範囲の値
 		//JSPへフォワード 7
+		System.out.println("★★★★★★★★★★★★★★★★★");
 		req.getRequestDispatcher("test_list.jsp").forward(req, res);
 	}
 
