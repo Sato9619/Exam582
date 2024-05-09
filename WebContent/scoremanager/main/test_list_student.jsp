@@ -58,7 +58,7 @@
 
 	<c:choose>
 		<c:when test="${testliststudent.size() > 0}">
-			<div>検索結果：${student}</div>
+			<div>検索結果：${student.name}(${student.no})</div>
 
 			<table class="table table-hover">
 				<tr>
@@ -70,8 +70,8 @@
 
 			 	<c:forEach var="tliststudent" items="${testliststudent}">
 					<tr>
-						<td>${tliststudent.subject_name}</td>
-						<td>${tliststudent.subject_cd}</td>
+						<td>${tliststudent.subjectName}</td>
+						<td>${tliststudent.subjectCd}</td>
 						<td>${tliststudent.time}</td>
 						<td>${tliststudent.point}</td>
 					</tr>

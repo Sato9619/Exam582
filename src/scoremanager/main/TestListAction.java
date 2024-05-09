@@ -56,7 +56,7 @@ public class TestListAction extends Action {
 
 		//SubjectDaoの中で学校コードから科目を抽出してる
 		List<Subject> listsubject = sbDao.filter(teacher.getSchool());
-		
+
 		//ビジネスロジック 4
 		if (entYearStr != null) {
 			// 数値に変換
