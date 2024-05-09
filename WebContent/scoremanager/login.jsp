@@ -24,19 +24,12 @@
 	<!-- ＩＤ -->
 	<label>ＩＤ</label>
 	<input type="text" name="id" maxlength="20" placeholder="20文字以内の半角英数字でご入力下さい"
-	 autocomplete="off" style="ime-mode: disabled" value="admin" required/>
+	 autocomplete="off" style="ime-mode: disabled" required/>
 
 	<!-- パスワード -->
 	<label>パスワード</label>
-	<input type="password" name="password" value="password">
-
-	<!-- 名前 -->
-	<label>名前</label>
-	<input type="text" name="namae" value="大原花子">
-
-	<!-- 学校コード -->
-	<label>学校コード</label>
-	<input type="text" name="school_cd" value="knz">
+	<input type="password"  name="password" value="password">
+    <p><label><input type="checkbox" name="password"></label>パスワードを表示</p>
 
 	<!-- ログイン用ボタン -->
 	<input type="submit" name="login" value="ログイン"/>
