@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Subject;
 import bean.Teacher;
+import dao.SchoolDao;
 import dao.SubjectDao;
 import tool.Action;
 
@@ -19,25 +21,31 @@ public class SubjectCreateExecuteAction extends Action {
 		//ローカル変数の宣言 1
 		HttpSession session = req.getSession(); //セッション
 		SubjectDao sDao = new SubjectDao();//科目Dao
+		SchoolDao scDao = new SchoolDao();//学校Dao
+
 		String SUBJECT_CD = "";//科目コード
 		String SUBJECT_NAME;//科目名
+		School SCHOOL_CD ;//学校コード
 		Subject subject = null;//科目
 
 		Map<String, String> errors = new HashMap<>();// エラーメッセージ
 		//ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
 		Teacher teacher = (Teacher) session.getAttribute("user");// ログインユーザーを取得
-
+		SCHOOL_CD = teacher.getSchool();
 
 
 		//リクエストパラメータ―の取得 2
 		SUBJECT_CD = req.getParameter("SUBJECT_CD");//科目コード
 		SUBJECT_NAME = req.getParameter("SUBJECT_NAME");//科目名
 
+
 		System.out.println(SUBJECT_CD);
 		System.out.println(SUBJECT_NAME);
 
+
+
 		//DBからデータ取得 3
-		subject = sDao.get(SUBJECT_CD);// 学生番号から学生インスタンスを取得
+		subject = sDao.get(SUBJECT_CD,SCHOOL_CD);// 学生番号から学生インスタンスを取得
 		System.out.print("科目は");
 		System.out.println(subject);
 		//List<String> list = cNumDao.filter(teacher.getSchool());// ログインユーザーの学校コードをもとにクラス番号の一覧を取得

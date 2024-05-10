@@ -26,6 +26,9 @@
 		<div>${errors.get("SUBJECT_NAME")}</div>
 
 
+		<input type ="hidden"  name="SCHOOL_CD"  value="${SCHOOL_CD}">
+
+
 
 		<input type="submit" value="登録">
 	</form>

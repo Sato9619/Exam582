@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Subject;
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.SchoolDao;
 import dao.SubjectDao;
 import tool.Action;
 
@@ -20,20 +22,27 @@ public class SubjectDeleteAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//ローカル変数の宣言 1
 		SubjectDao sDao = new SubjectDao();//学生Dao
+		SchoolDao scDao = new SchoolDao();//学校Dao
 		HttpSession session = req.getSession();//セッション
 		Teacher teacher = (Teacher)session.getAttribute("user");// ログインユーザーを取得　object型で取り出されるためTeacher型にキャストする
 		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
 		Map<String, String> errors = new HashMap<>();//エラーメッセージ
+		School SCHOOL_CD ;//学校コード
+
 
 		//リクエストパラメータ―の取得 2
 //		String no = req.getParameter("student_no");//学番
 		String no = req.getParameter("no");//科目コード
 
+
+		SCHOOL_CD = teacher.getSchool();
+
 		System.out.println("取り出している科目コードは"+ no);
 
 
+
 		//DBからデータ取得 3
-		Subject subject = sDao.get(no);//選択された科目コードから科目インスタンスを取得
+		Subject subject = sDao.get(no,SCHOOL_CD);//選択された科目コードから科目インスタンスを取得
 		List<String> list = cNumDao.filter(teacher.getSchool());//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
 
 
