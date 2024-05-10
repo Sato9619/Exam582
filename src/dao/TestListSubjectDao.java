@@ -33,16 +33,16 @@ public class TestListSubjectDao  extends Dao{
 		try{
 			//リザルトセットを全件走査
 			while (rSet.next()){
-				TestListSubject testlistclass = new TestListSubject();
+				TestListSubject testlistsubject = new TestListSubject();
 				//testインスタンスに検索結果をセット
-				testlistclass.setClassNum(rSet.getString("class_num"));
-				testlistclass.setEntYear(rSet.getInt("subject_cd"));
-				testlistclass.setName(rSet.getString("subject_name"));
-				testlistclass.setStudent_No(rSet.getString("student_no"));
-				testlistclass.setPoints(testlistclass.putPoint(rSet.getInt("time"),rSet.getInt("point")));
+				testlistsubject.setClassNum(rSet.getString("class_num"));
+				testlistsubject.setEntYear(rSet.getInt("subject_cd"));
+				testlistsubject.setName(rSet.getString("subject_name"));
+				testlistsubject.setStudent_No(rSet.getString("student_no"));
+				testlistsubject.setPoints(testlistsubject.putPoint(rSet.getInt("time"),rSet.getInt("point")));
 
 				//リストに追加
-				list.add(testlistclass);
+				list.add(testlistsubject);
 
 			}
 		} catch (SQLException | NullPointerException e){

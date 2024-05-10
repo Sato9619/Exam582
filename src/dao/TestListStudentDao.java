@@ -15,7 +15,7 @@ public class TestListStudentDao  extends Dao{
 	/**
 	 * baseSql:String 共通SQL文 プライベート
 	 */
-	private String baseSql = "select distinct subject.subject_name,subject.subject_cd,test.student_no,test.point from test inner join subject on subject.subject_cd=test.subject_cd where student_no = ?;";
+	private String baseSql = "select subject.subject_name,subject.subject_cd,test.time,test.point from test inner join subject on subject.subject_cd=test.subject_cd where student_no = ? ";
 
 	/**
 	 * postFilterメソッド フィルター後のリストへの格納処理 プライベート
@@ -33,11 +33,12 @@ public class TestListStudentDao  extends Dao{
 			//リザルトセットを全件走査
 			while (rSet.next()){
 				TestListStudent testliststudent = new TestListStudent();
-				//学生インスタンスに検索結果をセット
-				testliststudent.setPoint(rSet.getInt("point"));
-				testliststudent.setSubjectCd(rSet.getString("subject_cd"));
+				//学生別成績インスタンスに検索結果をセット
 				testliststudent.setSubjectName(rSet.getString("subject_name"));
-				testliststudent.setTime(rSet.getInt("class_num"));
+				testliststudent.setSubjectCd(rSet.getString("subject_cd"));
+
+				testliststudent.setTime(rSet.getInt("time"));
+				testliststudent.setPoint(rSet.getInt("point"));
 				//リストに追加
 				list.add(testliststudent);
 
@@ -74,22 +75,22 @@ public class TestListStudentDao  extends Dao{
 		ResultSet rSet = null;
 
 		//SQL分のソート
-		String order = " order by subject_no asc";
+		String order = " order by subject_cd asc";
 
 
 		try{
-
-
 			//プリペアードステートメントにSQL文をセット
-			statement = connection.prepareStatement(baseSql + order);
+			statement = connection.prepareStatement(baseSql);
+			System.out.println("★C★★★★★★★★★★★★★★★★");
 			//各部分に値を設定
 			statement.setString(1, student.getNo());
+			System.out.println("★d★★★★★★★★★★★★★★★★");
 
 			//上記のSQL文を実行し結果を取得する
 			rSet = statement.executeQuery();
 
 			list = postFilter(rSet);
-
+			System.out.println("★B★★★★★★★★★★★★★★★★");
 		}catch (Exception e){
 			throw e;
 		}finally {
