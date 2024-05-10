@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Student;
+import bean.Subject;
 import bean.Teacher;
+import bean.TestListStudent;
+import bean.TestListSubject;
 import dao.ClassNumDao;
-import dao.StudentDao;
+import dao.SubjectDao;
+import dao.TestListStudentDao;
+import dao.TestListSubjectDao;
 import tool.Action;
 
 public class TestListAction extends Action {
@@ -27,59 +31,31 @@ public class TestListAction extends Action {
 
 		String entYearStr="";// 入力された入学年度
 		String classNum = "";//入力されたクラス番号
-		String isAttendStr="";//入力された在学フラグ
+		String subject="";//入力された科目
+		String student_no = "";	//入力された在学フラグ
 		int entYear = 0;// 入学年度
-		boolean isAttend = false;// 在学フラグ
-		List<Student> students = null;// 学生リスト
 		LocalDate todaysDate = LocalDate.now();// LcalDateインスタンスを取得
 		int year = todaysDate.getYear();// 現在の年を取得
-		StudentDao sDao = new StudentDao();//学生Dao
+
+		List<TestListStudent> testliststudents = null;// 学生別成績リスト
+		List<TestListSubject> testlistsubject = null;// 科目別成績リスト
+
 		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
+		SubjectDao sbDao = new SubjectDao();// クラス番号Daoを初期化
+		TestListStudentDao tlsDao = new TestListStudentDao();// クラス番号Daoを初期化
+		TestListSubjectDao tlsbDao = new TestListSubjectDao();// 科目Daoを初期化
+
 		Map<String, String> errors = new HashMap<>();// エラーメッセージ
 
 		//リクエストパラメータ―の取得 2
-		entYearStr = req.getParameter("f1");
-		classNum = req.getParameter("f2");
-		isAttendStr = req.getParameter("f3");
-
-		if (isAttendStr != null) {
-			// 在学フラグを立てる
-			isAttend = true;
-		}
 
 		//DBからデータ取得 3
-		//学生管理を選択したときに表示される初期画面
+		//成績参照を選択したときに表示される初期画面
 		//ClassNumDaoの中で学校コードからクラスを抽出してる
-		List<String> list = cNumDao.filter(teacher.getSchool());
+		List<String> listclassNum = cNumDao.filter(teacher.getSchool());
 
-		if (entYearStr != null) {
-			// 数値に変換
-			entYear = Integer.parseInt(entYearStr);
-		}
-
-
-		if (entYear != 0 && !classNum.equals("0")) {
-			// 入学年度とクラス番号を指定(両方選択）
-			students = sDao.filter(teacher.getSchool(), entYear, classNum, isAttend);
-
-			System.out.println("★A★★★★★★★★★★★★★★★★");
-		} else if (entYear != 0 && classNum.equals("0")) {
-			// 入学年度のみ選択
-			students = sDao.filter(teacher.getSchool(), entYear, isAttend);
-			System.out.println("★B★★★★★★★★★★★★★★★★");
-		} else if (entYear == 0 && classNum == null || entYear == 0 && classNum.equals("0")) {
-			// 指定なしの場合
-			// 全学生情報を取得
-			students = sDao.filter(teacher.getSchool(), isAttend);
-			System.out.println("★C★★★★★★★★★★★★★★★★");
-		} else {
-			errors.put("f1", "クラスを指定する場合は入学年度も指定してください");
-			req.setAttribute("errors", errors);
-			// 全学生情報を取得
-			students = sDao.filter(teacher.getSchool(), isAttend);
-			System.out.println("★D★★★★★★★★★★★★★★★★");
-		}
-
+		//SubjectDaoの中で学校コードから科目を抽出してる
+		List<Subject> listsubject = sbDao.filter(teacher.getSchool());
 
 		//ビジネスロジック 4
 		if (entYearStr != null) {
@@ -97,21 +73,19 @@ public class TestListAction extends Action {
 		//なし
 		//レスポンス値をセット 6
 		// リクエストに入学年度をセット
-		req.setAttribute("f1", entYear);
+		req.setAttribute("entYear", entYear);
 		// リクエストにクラス番号をセット
-		req.setAttribute("f2", classNum);
-		// 在学フラグが送信されていた場合
-		if (isAttendStr != null) {
-			// リクエストに在学フラグをセット
-			req.setAttribute("f3", isAttendStr);
-		}
+		req.setAttribute("classNum", classNum);
+
 		// リクエストに学生リストをセット
-		req.setAttribute("students", students);				//入学年度等の絞り込み結果がstudentsの箱に入ってる
+		req.setAttribute("student_no", student_no);		//入学年度等の絞り込み結果がstudentsの箱に入ってる
 		// リクエストにデータをセット
-		req.setAttribute("class_num_set", list);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("class_num_set", listclassNum);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("listsubject", listsubject);			//学校コードで絞り込んだ所属している学校のクラスのリスト
 		req.setAttribute("ent_year_set", entYearSet);		//入学年度の範囲の値
 		//JSPへフォワード 7
-		req.getRequestDispatcher("student_list.jsp").forward(req, res);
+		System.out.println("★★★★★★★★★★★★★★★★★");
+		req.getRequestDispatcher("test_list.jsp").forward(req, res);
 	}
 
 }

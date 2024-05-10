@@ -10,15 +10,14 @@ import java.util.List;
 import javax.security.auth.Subject;
 
 import bean.School;
-import bean.TestListClass;
+import bean.TestListSubject;
 
-public class TestListClassDao  extends Dao{
+public class TestListSubjectDao  extends Dao{
 
 	/**
 	 * baseSql:String 共通SQL文 プライベート
 	 */
-	private String baseSql = "select * from test where =? ";
-
+	private String baseSql = "SELECT DISTINCT student.ent_year, student.class_num, student.student_no, student.name, test.point FROM testINNER JOIN student ON student.student_no = test.student_no WHERE ";
 	/**
 	 * postFilterメソッド フィルター後のリストへの格納処理 プライベート
 	 *
@@ -27,23 +26,23 @@ public class TestListClassDao  extends Dao{
 	 * @return 学生のリスト:List<StudentListTest> 存在しない場合は0件のリスト
 	 * @throws Exception
 	 */
-	private List<TestListClass> postFilter(ResultSet rSet) throws Exception {
+	private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
 		//リストを初期化
-		List<TestListClass> list = new ArrayList<>();
+		List<TestListSubject> list = new ArrayList<>();
 
 		try{
 			//リザルトセットを全件走査
 			while (rSet.next()){
-				TestListClass testlistclass = new TestListClass();
+				TestListSubject testlistsubject = new TestListSubject();
 				//testインスタンスに検索結果をセット
-				testlistclass.setClassNum(rSet.getString("class_num"));
-				testlistclass.setEntYear(rSet.getInt("subject_cd"));
-				testlistclass.setName(rSet.getString("subject_name"));
-				testlistclass.setStudent_No(rSet.getString("student_no"));
-				testlistclass.setPoints(testlistclass.putPoint(rSet.getInt("time"),rSet.getInt("point")));
+				testlistsubject.setClassNum(rSet.getString("class_num"));
+				testlistsubject.setEntYear(rSet.getInt("subject_cd"));
+				testlistsubject.setName(rSet.getString("subject_name"));
+				testlistsubject.setStudent_No(rSet.getString("student_no"));
+				testlistsubject.setPoints(testlistsubject.putPoint(rSet.getInt("time"),rSet.getInt("point")));
 
 				//リストに追加
-				list.add(testlistclass);
+				list.add(testlistsubject);
 
 			}
 		} catch (SQLException | NullPointerException e){
@@ -69,12 +68,12 @@ public class TestListClassDao  extends Dao{
 	 * @return 学生のリスト:List<Student> 存在しない場合は0件のリスト
 	 * @throws Exception
 	 */
-	public List<TestListClass> filter(Subject subject, int entYear, String classNum, School school) throws Exception {
+	public List<TestListSubject> filter(Subject subject, int entYear, String classNum, School school) throws Exception {
 
 		System.out.println("☆科目、学校、入学年度、クラス番号選択の時☆");
 
 		//リストを初期化
-		List<TestListClass> list = new ArrayList<>();
+		List<TestListSubject> list = new ArrayList<>();
 
 		//データベースへのコネクションを確立
 		Connection connection = getConnection();
@@ -83,7 +82,8 @@ public class TestListClassDao  extends Dao{
 		PreparedStatement statement = null;
 
 		//SQLの条件文
-		String condition = " and ent_year=? and class_num=? and subject_no=? and school_no=?";
+		String condition = " student.ent_year = ? AND student.class_num = ? AND test.subject_cd = ? AND student.school_cd = ? ";
+
 
 		try{
 
