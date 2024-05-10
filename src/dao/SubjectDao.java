@@ -14,7 +14,7 @@ import bean.Subject;
 public class SubjectDao  extends Dao{
 
 
-	public Subject get(String cd) throws Exception {
+	public Subject get(String cd,School school) throws Exception {
 
 		//学生インスタンスを初期化
 		Subject subject =new Subject();
@@ -29,9 +29,10 @@ public class SubjectDao  extends Dao{
 
 
 			//プリペアードステートメントにSQL文をセット
-			statement = connection.prepareStatement("SELECT * FROM SUBJECT WHERE SUBJECT_CD = ?");
+			statement = connection.prepareStatement("SELECT * FROM SUBJECT WHERE SUBJECT_CD = ? and SCHOOL_CD = ?");
 			//各部分に値を設定
 			statement.setString(1, cd);
+			statement.setString(2, school.getCd());
 
 			//上記のSQL文を実行し結果を取得する
 			ResultSet rSet = statement.executeQuery();
@@ -166,7 +167,7 @@ public class SubjectDao  extends Dao{
 
 			try{
 				//データベースから科目を取得
-				Subject old = get(subject.getSubject_cd());
+				Subject old = get(subject.getSubject_cd(),subject.getSchool());
 				if(old == null){
 					//科目が存在しなかった場合
 					//プリペアードステートメントにINSERT文をセット
@@ -227,7 +228,7 @@ public class SubjectDao  extends Dao{
 
 			try{
 				//データベースから科目を取得
-				Subject old = get(subject.getSubject_cd());
+				Subject old = get(subject.getSubject_cd(),subject.getSchool());
 
 					//科目が存在した場合
 					//プリペアードステートメントにUPDATE文をセット

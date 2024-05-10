@@ -37,10 +37,10 @@
 			<option value="0">--------</option>
 			<c:forEach var="listsubject" items="${listsubject}">
 				<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-				<option value="${listsubject}" <c:if test="${listsubject==f3}">selected</c:if>>${listsubject}</option>
+				<option value="${listsubject.subject_cd}" <c:if test="${listsubject==f3}">selected</c:if>>${listsubject.subject_name}</option>
 			</c:forEach>
 		</select></th>
-		<button>絞込み</button>
+		<button>検索</button>
 		</div>
 
 	</form>
