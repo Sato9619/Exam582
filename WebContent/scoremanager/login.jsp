@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -21,22 +22,25 @@
 	required:input要素を入力必須にする属性
  -->
 
-	<!-- ＩＤ -->
+
+	<h2>ログイン</h2>
+	<!-- ログインＩＤ -->
 	<label>ＩＤ</label>
 	<input type="text" name="id" maxlength="20" placeholder="20文字以内の半角英数字でご入力下さい"
 	 autocomplete="off" style="ime-mode: disabled" value="admin" required/>
 
 	<!-- パスワード -->
 	<label>パスワード</label>
-	<input type="password" name="password" value="password">
+	<input type="password" name="password" value="password"
+	style="ime-mode: disabled" required/>
 
-	<!-- 名前 -->
-	<label>名前</label>
-	<input type="text" name="namae" value="大原花子">
+	<!-- パスワード表示チェックボックス -->
+	<input id="inputCheckbox" type="checkbox">
 
-	<!-- 学校コード -->
-	<label>学校コード</label>
-	<input type="text" name="school_cd" value="knz">
+
+	 <c:forEach var="error" items="${errors}">
+	 <li>${errors}</li>
+	 </c:forEach>
 
 	<!-- ログイン用ボタン -->
 	<input type="submit" name="login" value="ログイン"/>

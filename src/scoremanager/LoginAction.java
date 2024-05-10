@@ -11,8 +11,6 @@ public class LoginAction extends Action{
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//ローカル変数の宣言 1
 		//なし
-		//リクエストパラメータ―の取得 2
-		//なし
 		//DBからデータ取得 3
 		//なし
 		//ビジネスロジック 4

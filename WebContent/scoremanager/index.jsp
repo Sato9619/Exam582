@@ -1,3 +1,4 @@
+
 <%-- indexリダイレクトページ --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,13 +9,16 @@
 <title></title>
 <script>
 //ログインページにリダイレクト
-
 location.href="/exam582/scoremanager/Login.action";
 </script>
-
 </head>
+
 <body>
 
-</body>
-</html>
 
+</body>
+
+
+</html>
+<!-- 変更してみたよ -->
+<!-- ohaよ -->

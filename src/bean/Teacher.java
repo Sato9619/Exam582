@@ -1,6 +1,8 @@
+
 package bean;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class Teacher extends User implements Serializable {
 	/**
@@ -56,6 +58,21 @@ public class Teacher extends User implements Serializable {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+
+	public void setClassNumSet(Set<Integer> classNumSet) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	public void setEntYearSet(Set<Integer> entYearSet) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	public void setSubjects(Set<String> subjectSet) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 }
