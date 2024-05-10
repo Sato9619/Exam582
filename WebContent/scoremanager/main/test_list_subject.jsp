@@ -15,8 +15,8 @@
 	<form action = "TestListSubjectExecute.action" method="get">
 	<div>科目情報
 		<th>入学年度
-			<select name="f1">
-				<option value="0">--------</option>
+			<select name="f1"required>
+				<option value="">--------</option>
 				<c:forEach var="year" items="${ent_year_set}">
 					<%-- 現在のyearと選択されていたf1が一致していた場合selectedを追記 --%>
 					<option value="${year}" <c:if test="${year==f1}">selected</c:if>>${year}</option>
@@ -24,8 +24,8 @@
 			</select>
 		</th>
 		<th>クラス
-			<select name="f2">
-			<option value="0">--------</option>
+			<select name="f2"required>
+			<option value="">--------</option>
 			<c:forEach var="num" items="${class_num_set}">
 				<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
 				<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
@@ -33,11 +33,11 @@
 		</select></th>
 
 		<th>科目
-			<select name="f3">
-			<option value="0">--------</option>
+			<select name="f3"required>
+			<option value="">--------</option>
 			<c:forEach var="listsubject" items="${listsubject}">
 				<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-				<option value="${listsubject}" <c:if test="${listsubject==f3}">selected</c:if>>${listsubject}</option>
+				<option value="${listsubject.subject_cd}" <c:if test="${listsubject==f3}">selected</c:if>>${listsubject.subject_name}</option>
 			</c:forEach>
 		</select></th>
 		<button>絞込み</button>
@@ -58,7 +58,7 @@
 
 	<c:choose>
 		<c:when test="${testlistsubject.size()>0}">
-			<div>科目：${testlistsubject.name}</div>
+			<div>科目：${subject.subject_name}</div>
 
 			<table class="table table-hover">
 				<tr>

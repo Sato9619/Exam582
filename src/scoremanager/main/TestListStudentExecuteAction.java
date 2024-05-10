@@ -1,5 +1,7 @@
 package scoremanager.main;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Student;
+import bean.Subject;
+import bean.Teacher;
 import bean.TestListStudent;
+import dao.ClassNumDao;
 import dao.StudentDao;
+import dao.SubjectDao;
 import dao.TestListStudentDao;
 import tool.Action;
 
@@ -20,12 +26,20 @@ public class TestListStudentExecuteAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//ローカル変数の宣言 1
 		HttpSession session = req.getSession();//セッション
+		Teacher teacher = (Teacher)session.getAttribute("user");//ログインユーザー
 
 		TestListStudentDao tlsDao = new TestListStudentDao();//学生別成績Dao
 		StudentDao sDao = new StudentDao();//学生別成績Dao
 
 		String student_no = "";//学生番号
 		Student student = null;//学生
+		String classNum = "";//入力されたクラス番号
+		LocalDate todaysDate = LocalDate.now();// LcalDateインスタンスを取得
+		int year = todaysDate.getYear();// 現在の年を取得
+
+		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
+		SubjectDao sbDao = new SubjectDao();// クラス番号Daoを初期化
+
 		Map<String, String> errors = new HashMap<>();// エラーメッセージ
 
 		//リクエストパラメータ―の取得 2
@@ -39,21 +53,35 @@ public class TestListStudentExecuteAction extends Action {
 
 		System.out.println(list);
 
+		//リクエストパラメータ―の取得 2
+
+		//DBからデータ取得 3
+		//成績参照を選択したときに表示される初期画面
+		//ClassNumDaoの中で学校コードからクラスを抽出してる
+		List<String> listclassNum = cNumDao.filter(teacher.getSchool());
+
+		//SubjectDaoの中で学校コードから科目を抽出してる
+		List<Subject> listsubject = sbDao.filter(teacher.getSchool());
+
 		//ビジネスロジック 4
 
-		//DBへデータ保存 5
-		//条件で手順4~5の内容が分岐
-
-//		if (list == null) {// 入学年度が選択されていない場合
-//			errors.put("student_no", "このフィールドを入力してください");
-//		}
-
+		// リストを初期化
+		List<Integer> entYearSet = new ArrayList<>();
+		// 10年前から10年後まで年をリストに追加
+		for (int i = year - 10; i < year + 10; i++) {
+			entYearSet.add(i);
+		}
 		//エラーがあったかどうかで手順6~7の内容が分岐
 		//レスポンス値をセット 6
 		//JSPへフォワード 7
 
 		req.setAttribute("testliststudent", list);//学生別成績のlistをセット
 		req.setAttribute("student", student);//学生別成績のlistをセット
+
+		req.setAttribute("class_num_set", listclassNum);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("listsubject", listsubject);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("ent_year_set", entYearSet);		//入学年度の範囲の値
+
 		System.out.println("★A★★★★★★★★★★★★★★★★");
 		req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
 	}

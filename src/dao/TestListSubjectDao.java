@@ -30,9 +30,20 @@ public class TestListSubjectDao  extends Dao{
 		List<TestListSubject> list = new ArrayList<>();
 
 		try{
+
+			String student ="";
+			TestListSubject testlistsubject = new TestListSubject();
 			//リザルトセットを全件走査
 			while (rSet.next()){
-				TestListSubject testlistsubject = new TestListSubject();
+				if(student.equals(rSet.getString("student_no"))){
+					testlistsubject.setPoints(testlistsubject.putPoint(rSet.getInt("time"),rSet.getInt("point")));
+				}else{
+					if(!(student.equals(""))){
+						list.add(testlistsubject);
+					}
+
+				testlistsubject = new TestListSubject();
+
 				//testインスタンスに検索結果をセット
 				testlistsubject.setClassNum(rSet.getString("class_num"));
 				testlistsubject.setEntYear(rSet.getInt("ent_year"));
@@ -40,10 +51,13 @@ public class TestListSubjectDao  extends Dao{
 				testlistsubject.setStudent_No(rSet.getString("student_no"));
 				testlistsubject.setPoints(testlistsubject.putPoint(rSet.getInt("time"),rSet.getInt("point")));
 
+				student=rSet.getString("student_no");
+				}
+			}if(!(student.equals(""))){
 				//リストに追加
 				list.add(testlistsubject);
+				}
 
-			}
 		} catch (SQLException | NullPointerException e){
 			e.printStackTrace();
 		}
@@ -90,7 +104,6 @@ public class TestListSubjectDao  extends Dao{
 			//各部分に値を設定
 			statement.setInt(1, entYear);
 			statement.setString(2, classNum);
-			System.out.println(subject.getSubject_cd());
 			statement.setString(3, subject.getSubject_cd());
 			statement.setString(4, school.getCd());
 

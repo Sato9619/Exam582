@@ -2,9 +2,7 @@ package scoremanager.main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +12,6 @@ import bean.Subject;
 import bean.Teacher;
 import dao.ClassNumDao;
 import dao.SubjectDao;
-import dao.TestListStudentDao;
-import dao.TestListSubjectDao;
 import tool.Action;
 
 public class TestListAction extends Action {
@@ -27,20 +23,12 @@ public class TestListAction extends Action {
 		HttpSession session = req.getSession();//セッション
 		Teacher teacher = (Teacher)session.getAttribute("user");//ログインユーザー
 
-		String entYearStr="";// 入力された入学年度
 		String classNum = "";//入力されたクラス番号
-		String subject="";//入力された科目
-		String student_no = "";	//入力された在学フラグ
-		int entYear = 0;// 入学年度
 		LocalDate todaysDate = LocalDate.now();// LcalDateインスタンスを取得
 		int year = todaysDate.getYear();// 現在の年を取得
 
 		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
 		SubjectDao sbDao = new SubjectDao();// クラス番号Daoを初期化
-		TestListStudentDao tlsDao = new TestListStudentDao();// クラス番号Daoを初期化
-		TestListSubjectDao tlsbDao = new TestListSubjectDao();// 科目Daoを初期化
-
-		Map<String, String> errors = new HashMap<>();// エラーメッセージ
 
 		//リクエストパラメータ―の取得 2
 
@@ -64,13 +52,8 @@ public class TestListAction extends Action {
 		//DBへデータ保存 5
 		//なし
 		//レスポンス値をセット 6
-		// リクエストに入学年度をセット
-		req.setAttribute("entYear", entYear);
 		// リクエストにクラス番号をセット
 		req.setAttribute("classNum", classNum);
-
-		// リクエストに学生リストをセット
-		req.setAttribute("student_no", student_no);		//入学年度等の絞り込み結果がstudentsの箱に入ってる
 		// リクエストにデータをセット
 		req.setAttribute("class_num_set", listclassNum);			//学校コードで絞り込んだ所属している学校のクラスのリスト
 		req.setAttribute("listsubject", listsubject);			//学校コードで絞り込んだ所属している学校のクラスのリスト
