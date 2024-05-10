@@ -49,6 +49,9 @@ public class SubjectListAction extends Action{
 				// リクエストにデータをセット
 				req.setAttribute("class_num_set", list);			//学校コードで絞り込んだ所属している学校のクラスのリスト
 
+				//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+				//System.out.println(subjects);
 
 				/**
 
