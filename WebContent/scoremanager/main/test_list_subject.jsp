@@ -57,23 +57,27 @@
 	</form>
 
 	<c:choose>
-		<c:when test="${testliststudent.size()>0}">
-			<div>検索結果：${student.name}(${student.no})</div>
+		<c:when test="${testlistsubject.size()>0}">
+			<div>科目：${testlistsubject.name}</div>
 
 			<table class="table table-hover">
 				<tr>
-					<th>科目名</th>
-					<th>科目コード</th>
-					<th>回数</th>
-					<th>点数</th>
+					<th>入学年度</th>
+					<th>クラス</th>
+					<th>学生番号</th>
+					<th>氏名</th>
+					<th>1回</th>
+					<th>2回</th>
 				</tr>
 
-			 	<c:forEach var="tliststudent" items="${testliststudent}">
+			 	<c:forEach var="tlistsubject" items="${testlistsubject}">
 					<tr>
-						<td>${tliststudent.subjectName}</td>
-						<td>${tliststudent.subjectCd}</td>
-						<td>${tliststudent.time}</td>
-						<td>${tliststudent.point}</td>
+						<td>${tlistsubject.entYear}</td>
+						<td>${tlistsubject.classNum}</td>
+						<td>${tlistsubject.student_No}</td>
+						<td>${tlistsubject.name}</td>
+						<td>${tlistsubject.getPoint(1)}</td>
+						<td>${tlistsubject.getPoint(2)}</td>
 					</tr>
 				</c:forEach>
 			</table>

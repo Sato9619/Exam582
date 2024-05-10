@@ -32,7 +32,7 @@ public class TestListSubject {
 
 	//せったげった
 
-	public void TestListSubject(){
+	public TestListSubject(){
 		points=new HashMap<>();
 	}
 
