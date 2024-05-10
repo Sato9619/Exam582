@@ -35,9 +35,9 @@
 		<th>科目
 			<select name="f3">
 			<option value="0">--------</option>
-			<c:forEach var="num" items="${class_num_set}">
+			<c:forEach var="listsubject" items="${listsubject}">
 				<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-				<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
+				<option value="${listsubject}" <c:if test="${listsubject==f3}">selected</c:if>>${listsubject}</option>
 			</c:forEach>
 		</select></th>
 		<button>絞込み</button>
