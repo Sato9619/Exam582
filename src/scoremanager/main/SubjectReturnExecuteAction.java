@@ -16,7 +16,8 @@ import dao.SchoolDao;
 import dao.SubjectDao;
 import tool.Action;
 
-public class SubjectDeleteExecuteAction extends Action {
+public class SubjectReturnExecuteAction extends Action{
+
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//System.out.println("動いてますか？？");
@@ -61,8 +62,8 @@ public class SubjectDeleteExecuteAction extends Action {
 			// インスタンスに値をセット
 			//subject.setSubject_name(SUBJECT_CD);
 
-			// 学生を削除
-			sDao.delete(subject);
+			// 学生を保存
+			sDao.subject_return(subject);
 		} else {
 			errors.put("SUBJECT_CD", "科目が存在していません");
 		}
@@ -82,11 +83,11 @@ public class SubjectDeleteExecuteAction extends Action {
 			// リクエスト属性をセット
 			req.setAttribute("errors", errors);
 			req.setAttribute("SUBJECT_CD", SUBJECT_CD);
-						req.getRequestDispatcher("subject_delete.jsp").forward(req, res);
+						req.getRequestDispatcher("subject_return.jsp").forward(req, res);
 			return;
 		}
 
 
-		req.getRequestDispatcher("subject_delete_done.jsp").forward(req, res);
+		req.getRequestDispatcher("subject_return_done.jsp").forward(req, res);
 	}
 }

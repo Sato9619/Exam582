@@ -24,6 +24,8 @@ public class SubjectListAction extends Action{
 				String STBJECT_CD="";// 科目コード
 				String SUBJECT_NAME = "";//科目名
 				List<Subject> subjects = null;// 科目リスト
+				String IS_ATTENDStr = "";
+				boolean IS_ATTEND = true;
 
 
 				ClassNumDao cNumDao = new ClassNumDao();//科目Dao
@@ -34,6 +36,12 @@ public class SubjectListAction extends Action{
 				//リクエストパラメータ―の取得 2
 				STBJECT_CD = req.getParameter("f1");
 				SUBJECT_NAME = req.getParameter("f2");
+				IS_ATTENDStr = req.getParameter("f3");
+
+				if(IS_ATTENDStr != null){
+					IS_ATTEND = true;
+				}
+
 
 
 				//DBからデータ取得 3
@@ -42,7 +50,7 @@ public class SubjectListAction extends Action{
 
 
 				List<String> list = cNumDao.filter(teacher.getSchool());
-				subjects = sDao.filter(teacher.getSchool());
+				subjects = sDao.filter(teacher.getSchool(),IS_ATTEND);
 
 				// リクエストに学生リストをセット
 				req.setAttribute("subjects", subjects);				//入学年度等の絞り込み結果がstudentsの箱に入ってる

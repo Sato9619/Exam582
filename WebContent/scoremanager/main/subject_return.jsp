@@ -1,7 +1,5 @@
-<%-- 学生一覧JSP --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 下記の一文の宣言がないとJSTLを使用できない -->
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -10,10 +8,8 @@
 <title>得点管理システム</title>
 </head>
 <body>
+<h2>削除済み科目</h2>
 
-	<h2>科目管理</h2>
-	<a href="SubjectCreate.action">新規登録</a>
-	<a href="SubjectReturn.action">削除済み科目一覧</a>
 
 
 			<table class="table table-hover">
@@ -31,11 +27,12 @@
 
 
 						</td>
-						<td><a href="SubjectUpdate.action?no=${subject.subject_cd}">変更</a></td>
-						<td><a href="SubjectDelete.action?no=${subject.subject_cd}">削除</a></td>
+						<td><a href="SubjectReturnExecute.action?no=${subject.subject_cd}">元に戻す</a></td>
+
 					</tr>
 				</c:forEach>
 			</table>
+
 
 
 </body>

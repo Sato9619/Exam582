@@ -46,6 +46,7 @@ public class SubjectDao  extends Dao{
 
 				//学校フィールドには学校コードで検索した学校インスタンスをセット
 				subject.setSchool(schoolDao.get(rSet.getString("school_cd")));
+				subject.setIS_ATTEND(rSet.getBoolean("IS_ATTEND"));
 
 			}else {
 				//リザルトセットが存在しない場合
@@ -106,7 +107,7 @@ public class SubjectDao  extends Dao{
 
 		private String baseSql = "select * from subject where school_cd=?";
 
-		public List<Subject> filter(School school) throws Exception {
+		public List<Subject> filter(School school,boolean ISATTEND) throws Exception {
 
 			//リストを初期化
 			List<Subject> list = new ArrayList<>();
@@ -117,14 +118,15 @@ public class SubjectDao  extends Dao{
 			//リザルトセット
 			ResultSet rSet = null;
 
-//			//SQL文の条件
-//			String condition = "and subject_cd=? and name=?";
-//			//SQL文のソート
-//			String order = "order by no asc";
+//			//在学
+			String conditionISAttend = "";
+			if(ISATTEND){
+				conditionISAttend ="and IS_ATTEND = true";
+			}
 
 			try{
-//				statement = connection.prepareStatement(baseSql + condition + order);
-				statement = connection.prepareStatement(baseSql);
+//
+				statement = connection.prepareStatement(baseSql + conditionISAttend);
 
 				//各部分に値を設定
 				statement.setString(1, school.getCd());
@@ -217,6 +219,56 @@ public class SubjectDao  extends Dao{
 			return false;
 		}
 	}
+		public List<Subject> filter_return(School school,boolean ISATTEND) throws Exception {
+
+			//リストを初期化
+			List<Subject> list = new ArrayList<>();
+			//コネクションを確立
+			Connection connection = getConnection();
+			//プリペアードステートメント
+			PreparedStatement statement = null;
+			//リザルトセット
+			ResultSet rSet = null;
+
+//			//在学
+			String conditionISAttend = "";
+			if(ISATTEND){
+				conditionISAttend ="and IS_ATTEND = false";
+			}
+
+			try{
+//
+				statement = connection.prepareStatement(baseSql + conditionISAttend);
+
+				//各部分に値を設定
+				statement.setString(1, school.getCd());
+
+				//上記のSQL文を実行し結果を取得する
+				rSet = statement.executeQuery();
+
+				list = postFilter(rSet, school);
+
+			}catch(Exception e){
+				throw e;
+			}finally{
+				if(statement != null){
+					try{
+						statement.close();
+					}catch(SQLException sqle){
+						throw sqle;
+					}
+				}
+				if(connection != null){
+					try{
+						connection.close();
+					}catch(SQLException sqle){
+						throw sqle;
+					}
+				}
+			}
+
+			return list;
+		}
 
 		public boolean delete(Subject subject)throws Exception{
 			//コネクションを確立
@@ -234,7 +286,7 @@ public class SubjectDao  extends Dao{
 					//プリペアードステートメントにUPDATE文をセット
 					//UPDATE SUBJECT  set SUBJECT_NAME = '林' where SUBJECT_CD = 'Z99';
 					statement = connection.prepareStatement(
-							"delete from SUBJECT where SUBJECT_NAME = ? and SCHOOL_CD = ?");
+							"UPDATE SUBJECT SET IS_ATTEND = FALSE  where SUBJECT_NAME = ? and SCHOOL_CD = ? ");
 
 					//プリペアードステートメントに値をバインド
 					//statement.setString(1, subject.getSchool().getCd());
@@ -272,4 +324,61 @@ public class SubjectDao  extends Dao{
 		}
 		}
 
+
+
+public boolean subject_return(Subject subject)throws Exception{
+	//コネクションを確立
+	Connection connection = getConnection();
+	//プリペアードステートメント
+	PreparedStatement statement = null;
+	//実行件数
+	int count = 0;
+
+	try{
+		//データベースから科目を取得
+		Subject old = get(subject.getSubject_cd(),subject.getSchool());
+
+			//科目が存在した場合
+			//プリペアードステートメントにUPDATE文をセット
+			//UPDATE SUBJECT  set SUBJECT_NAME = '林' where SUBJECT_CD = 'Z99';
+			statement = connection.prepareStatement(
+					"UPDATE SUBJECT SET IS_ATTEND = true  where SUBJECT_NAME = ? and SCHOOL_CD = ? ");
+
+			//プリペアードステートメントに値をバインド
+			//statement.setString(1, subject.getSchool().getCd());
+			statement.setString(2, subject.getSchool().getCd());
+			statement.setString(1, subject.getSubject_name());
+			//statement.setString(2, subject.getSubject_cd());
+
+
+	//プリぺードステートメントを実行
+	count = statement.executeUpdate();
+
+}catch(Exception e){
+	throw e;
+}finally{
+	if(statement != null){
+		try{
+			statement.close();
+		}catch(SQLException sqle){
+			throw sqle;
+		}
+	}
+	//コネクションを閉じる
+	if(connection != null){
+		try{
+			connection.close();
+		}catch(SQLException sqle){
+			throw sqle;
+		}
+	}
 }
+if(count >0){
+	return true;
+}else{
+	return false;
+}
+}
+
+}
+

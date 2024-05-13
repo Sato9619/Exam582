@@ -69,11 +69,24 @@ public class SubjectCreateExecuteAction extends Action {
 				subject.setSubject_cd(SUBJECT_CD);
 				subject.setSubject_name(SUBJECT_NAME);
 				subject.setSchool(((Teacher)session.getAttribute("user")).getSchool());
+
+				int SUB_LEN = SUBJECT_CD.length();
+				System.out.println(SUB_LEN);
+				if(SUB_LEN != 3){
+					errors.put("SUBJECT_CD", "科目コードは３文字で入力してください");
+				}else{
 				// 科目を保存
 				sDao.save(subject);
+				}
 		} else if(subject != null){//入力された科目がDBに保存されていた場合
 				errors.put("SUBJECT_CD", "科目コードが重複しています");
 		}
+
+
+
+
+
+
 
 
 

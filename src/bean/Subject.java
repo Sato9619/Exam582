@@ -18,7 +18,7 @@ public class Subject implements Serializable {
 	 * 所属校:School
 	 */
 	private School school;
-
+	private boolean IS_ATTEND;
 
 
 	public String getSubject_cd() {
@@ -43,6 +43,14 @@ public class Subject implements Serializable {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+
+	public boolean isIS_ATTEND() {
+		return IS_ATTEND;
+	}
+
+	public void setIS_ATTEND(boolean iS_ATTEND) {
+		IS_ATTEND = iS_ATTEND;
 	}
 
 
