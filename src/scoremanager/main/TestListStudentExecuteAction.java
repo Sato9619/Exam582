@@ -30,15 +30,13 @@ public class TestListStudentExecuteAction extends Action {
 
 		TestListStudentDao tlsDao = new TestListStudentDao();//学生別成績Dao
 		StudentDao sDao = new StudentDao();//学生別成績Dao
+		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
+		SubjectDao sbDao = new SubjectDao();// 科目Daoを初期化
 
 		String student_no = "";//学生番号
 		Student student = null;//学生
-		String classNum = "";//入力されたクラス番号
 		LocalDate todaysDate = LocalDate.now();// LcalDateインスタンスを取得
 		int year = todaysDate.getYear();// 現在の年を取得
-
-		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
-		SubjectDao sbDao = new SubjectDao();// クラス番号Daoを初期化
 
 		Map<String, String> errors = new HashMap<>();// エラーメッセージ
 
@@ -48,10 +46,19 @@ public class TestListStudentExecuteAction extends Action {
 		System.out.println(student_no);
 
 		//DBからデータ取得 3
-		student = sDao.get(student_no);// 学生番号から学生インスタンスを取得
-		List<TestListStudent> list = tlsDao.filter(student);// studentコードをもとにテストの一覧を取得
 
-		System.out.println(list);
+		student = sDao.get(student_no);// 学生番号から学生インスタンスを取得
+
+		if(student == null){
+			errors.put("student", "学生情報が存在しません");
+		}else{
+			List<TestListStudent> list = tlsDao.filter(student);// studentコードをもとにテストの一覧を取得
+			req.setAttribute("testliststudent", list);//学生別成績のlistをセット
+			req.setAttribute("student", student);//学生情報のstudentをセット
+
+		}
+		System.out.println(student);
+
 
 		//リクエストパラメータ―の取得 2
 
@@ -75,13 +82,15 @@ public class TestListStudentExecuteAction extends Action {
 		//レスポンス値をセット 6
 		//JSPへフォワード 7
 
-		req.setAttribute("testliststudent", list);//学生別成績のlistをセット
-		req.setAttribute("student", student);//学生別成績のlistをセット
-
-		req.setAttribute("class_num_set", listclassNum);			//学校コードで絞り込んだ所属している学校のクラスのリスト
-		req.setAttribute("listsubject", listsubject);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("class_num_set", listclassNum);	//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("listsubject", listsubject);		//学校コードで絞り込んだ科目のリスト
 		req.setAttribute("ent_year_set", entYearSet);		//入学年度の範囲の値
 
+		if(!errors.isEmpty()){
+			req.setAttribute("errors", errors);
+			req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
+			return;
+		}
 		System.out.println("★A★★★★★★★★★★★★★★★★");
 		req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
 	}

@@ -28,7 +28,7 @@ public class TestListAction extends Action {
 		int year = todaysDate.getYear();// 現在の年を取得
 
 		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
-		SubjectDao sbDao = new SubjectDao();// クラス番号Daoを初期化
+		SubjectDao sbDao = new SubjectDao();// 科目Daoを初期化
 
 		//リクエストパラメータ―の取得 2
 
@@ -55,8 +55,8 @@ public class TestListAction extends Action {
 		// リクエストにクラス番号をセット
 		req.setAttribute("classNum", classNum);
 		// リクエストにデータをセット
-		req.setAttribute("class_num_set", listclassNum);			//学校コードで絞り込んだ所属している学校のクラスのリスト
-		req.setAttribute("listsubject", listsubject);			//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("class_num_set", listclassNum);	//学校コードで絞り込んだ所属している学校のクラスのリスト
+		req.setAttribute("listsubject", listsubject);		//学校コードで絞り込んだ科目のリスト
 		req.setAttribute("ent_year_set", entYearSet);		//入学年度の範囲の値
 		//JSPへフォワード 7
 		System.out.println("★★★★★★★★★★★★★★★★★");

@@ -36,8 +36,8 @@
 			<select name="f3"required>
 			<option value="">--------</option>
 			<c:forEach var="listsubject" items="${listsubject}">
-				<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-				<option value="${listsubject.subject_cd}" <c:if test="${listsubject==f3}">selected</c:if>>${listsubject.subject_name}</option>
+				<%-- 現在のlistsubjectと選択されていたf3が一致していた場合selectedを追記 --%>
+				<option value="${listsubject.subject_cd}" <c:if test="${listsubject.subject_name==f3}">selected</c:if>>${listsubject.subject_name}</option>
 			</c:forEach>
 		</select></th>
 		<button>絞込み</button>
@@ -83,7 +83,7 @@
 			</table>
 		</c:when>
 		<c:otherwise>
-			<div>学生情報が存在しませんでした</div>
+			<div>成績情報が存在しませんでした</div>
 		</c:otherwise>
 	</c:choose>
 
