@@ -30,6 +30,8 @@ public class TestListAction extends Action {
 		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
 		SubjectDao sbDao = new SubjectDao();// 科目Daoを初期化
 
+
+
 		//リクエストパラメータ―の取得 2
 
 		//DBからデータ取得 3
@@ -38,7 +40,7 @@ public class TestListAction extends Action {
 		List<String> listclassNum = cNumDao.filter(teacher.getSchool());
 
 		//SubjectDaoの中で学校コードから科目を抽出してる
-		List<Subject> listsubject = sbDao.filter(teacher.getSchool());
+		List<Subject> listsubject = sbDao.filter(teacher.getSchool(),true);
 
 		//ビジネスロジック 4
 

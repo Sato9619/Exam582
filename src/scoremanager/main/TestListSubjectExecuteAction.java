@@ -71,7 +71,7 @@ public class TestListSubjectExecuteAction extends Action {
 		List<String> listclassNum = cNumDao.filter(teacher.getSchool());
 
 		//SubjectDaoの中で学校コードから科目を抽出してる
-		List<Subject> listsubject = sbDao.filter(teacher.getSchool());
+		List<Subject> listsubject = sbDao.filter(teacher.getSchool(),true);
 
 		//ビジネスロジック 4
 
