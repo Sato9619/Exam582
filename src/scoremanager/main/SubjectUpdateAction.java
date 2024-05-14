@@ -32,36 +32,33 @@ public class SubjectUpdateAction extends Action {
 
 
 		//リクエストパラメータ―の取得 2
-//		String no = req.getParameter("student_no");//学番
 		String no = req.getParameter("no");//学番
-		//SCHOOL_CD = req.getParameter("SCHOOL_CD");//学校コード
 
 
 		System.out.println("取り出している科目コードは"+ no);
 
 		SCHOOL_CD = teacher.getSchool();
 
-		//DBからデータ取得 3
-		Subject subject = sDao.get(no,SCHOOL_CD);//選択された科目コードから科目インスタンスを取得
-		List<String> list = cNumDao.filter(teacher.getSchool());//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
+		//選択された科目コードから科目インスタンスを取得
+		Subject subject = sDao.get(no,SCHOOL_CD);
+		//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
+		List<String> list = cNumDao.filter(teacher.getSchool());
 
 
-		//ビジネスロジック 4
-		//DBへデータ保存 5
-		//レスポンス値をセット 6
-		//条件で手順4~6の内容が分岐
 		req.setAttribute("SUBJECT_CD_set", list);
-		if (subject != null) {// 学生が存在していた場合
+
+		// 学生が存在していた場合
+		if (subject != null) {
 			req.setAttribute("subject_cd", subject.getSubject_cd());
 			req.setAttribute("subject_name", subject.getSubject_name());
-			//req.setAttribute("name", student.getName());
-			//req.setAttribute("class_num", student.getClassNum());
-			//req.setAttribute("is_attend", student.isAttend());
-		} else {// 学生が存在していなかった場合
+		}
+		// 学生が存在していなかった場合
+		else {
 			errors.put("SUBJECT_CD", "科目が存在していません");
 			req.setAttribute("errors", errors);
 		}
-		//JSPへフォワード 7
+
+		//フォワード
 		req.getRequestDispatcher("subject_update.jsp").forward(req, res);
 	}
 }

@@ -36,50 +36,35 @@ public class SubjectReturnExecuteAction extends Action{
 		//subeject_cdなのかsubject_nameを確認
 		String SUBJECT_CD = req.getParameter("no");
 
-		//System.out.println("a");
+
 		System.out.println(req.getParameter("no"));
 
 		SCHOOL_CD = teacher.getSchool();
 
 
+		// 科目コードから科目インスタンスを取得
+		Subject subject = sDao.get(SUBJECT_CD,SCHOOL_CD);
+
+		//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
+		List<String> list = cNumDao.filter(teacher.getSchool());
 
 
-
-		//DBからデータ取得 3
-		Subject subject = sDao.get(SUBJECT_CD,SCHOOL_CD);// 科目コードから科目インスタンスを取得
-		List<String> list = cNumDao.filter(teacher.getSchool());//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
-
-		//System.out.print("SUBJECT_CD");
-		//System.out.print("subject");
-		//System.out.print(subject);
-		//System.out.print("subject");
-
-
-		//ビジネスロジック 4
-		//DBへデータ保存 5
+		// 科目が存在していた場合
 		if (subject != null) {
-			// 学生が存在していた場合
-			// インスタンスに値をセット
-			//subject.setSubject_name(SUBJECT_CD);
-
-			// 学生を保存
+			// 科目を保存
 			sDao.subject_return(subject);
-		} else {
+		}
+		//科目が存在していない場合
+		else {
 			errors.put("SUBJECT_CD", "科目が存在していません");
 		}
 
-		//エラーがあったかどうかで手順6~7の内容が分岐
-		//レスポンス値をセット 6
-		//JSPへフォワード 7
-
-
 
 		req.setAttribute("Subject_cd_set", list);
-		//System.out.print("errors");
-		//System.out.print(errors);
-		//System.out.print("errors");
 
-		if(!errors.isEmpty()){//エラーがあった場合、更新画面へ戻る
+
+		//エラーがあった場合、更新画面へ戻る
+		if(!errors.isEmpty()){
 			// リクエスト属性をセット
 			req.setAttribute("errors", errors);
 			req.setAttribute("SUBJECT_CD", SUBJECT_CD);
@@ -88,6 +73,7 @@ public class SubjectReturnExecuteAction extends Action{
 		}
 
 
+		//フォワード
 		req.getRequestDispatcher("subject_return_done.jsp").forward(req, res);
 	}
 }

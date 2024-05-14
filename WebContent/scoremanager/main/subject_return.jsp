@@ -10,6 +10,9 @@
 <body>
 <h2>削除済み科目</h2>
 
+<a test="${subjects.size()>0}"></a>
+			<div>検索結果：${subjects.size()}件</div>
+
 
 
 			<table class="table table-hover">
@@ -33,7 +36,7 @@
 				</c:forEach>
 			</table>
 
-
+	<a href="SubjectList.action">戻る</a>
 
 </body>
 </html>

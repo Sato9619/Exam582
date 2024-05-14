@@ -15,6 +15,9 @@
 	<a href="SubjectCreate.action">新規登録</a>
 	<a href="SubjectReturn.action">削除済み科目一覧</a>
 
+	<a test="${subjects.size()>0}"></a>
+			<div>検索結果：${subjects.size()}件</div>
+
 
 			<table class="table table-hover">
 				<tr>

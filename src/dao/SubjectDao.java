@@ -174,7 +174,7 @@ public class SubjectDao  extends Dao{
 					//科目が存在しなかった場合
 					//プリペアードステートメントにINSERT文をセット
 					statement = connection.prepareStatement(
-							"insert into subject(school_cd,subject_cd,subject_name)values(?,?,?)");
+							"insert into subject(school_cd,subject_cd,subject_name,IS_ATTEND)values(?,?,?,true)");
 					//プリペアードステートメントに値をバインド
 					statement.setString(1, subject.getSchool().getCd());
 					statement.setString(2, subject.getSubject_cd());
