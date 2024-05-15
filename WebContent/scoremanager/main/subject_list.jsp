@@ -40,6 +40,7 @@
 				</c:forEach>
 			</table>
 
+	<a href="menu.jsp">戻る</a>
 
 </body>
 </html>
