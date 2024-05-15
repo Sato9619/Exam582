@@ -5,23 +5,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel='stylesheet' href='../css/style.css'>
 <title>得点管理システム</title>
 </head>
-
-<c:import url="/common/header.jsp" />
-
+<div class=header >
+	<c:import url="/common/header.jsp" />
+</div>
 <body>
+<div class=container >
+	<div class="sidebar"><c:import url="/common/navigation.jsp" /></div>
 
-<c:import url="/common/navigation.jsp" />
-
+<div class="main-content">
 <h2>メニュー</h2>
 
-<a href="StudentList.action">学生管理</a>
-<a href="#">成績登録</a>
-<a href="TestList.action">成績参照</a>
-<a href="SubjectList.action">科目管理</a>
-<a href="../Logout.action">ログアウト</a>
+<div class="left box1">
+	<a href="StudentList.action">学生管理</a>
+</div>
 
+<div class="left box2">
+	<div class="center">
+	<a>成績管理</a>
+	<a href="#">成績登録</a>
+	<a href="TestList.action">成績参照</a>
+	</div>
+</div>
+
+<div class="left box3">
+	<a href="SubjectList.action">科目管理</a>
+</div>
+
+</div>
+</div>
 </body>
-<c:import url="/common/footer.jsp" />
+<div class="footer02">
+	<c:import url="/common/footer.jsp" />
+</div>
 </html>

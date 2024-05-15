@@ -6,8 +6,8 @@
 	<h1>得点管理システム</h1>
 </div>
 <c:if test="${user.isAuthenticated()}">
-	<div>
+	<div class="right">
 		<span>${user.getName()}様</span>
-		<a href="Logout.action">ログアウト</a>
+		<a href="../Logout.action">ログアウト</a>
 	</div>
 </c:if>
